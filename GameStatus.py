@@ -2,6 +2,6 @@ import enum
 
 
 class GameStatus(enum.Enum):
-    still_playing = 0
-    success = 1
-    game_over = 2
+    game_in_progress = 0
+    game_won = 1
+    game_lost = 2

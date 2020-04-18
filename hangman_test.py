@@ -51,7 +51,8 @@ class HangmanGameTests(unittest.TestCase):
     @patch('builtins.input', lambda *args: 'e')
     def test_get_user_guess_input_success(self):
         # Arrange
-        hangman = Hangman()
+        WORD = "Dexter"
+        hangman = Hangman(WORD)
 
         # Act
         result = hangman.user_guess()
@@ -64,8 +65,6 @@ class HangmanGameTests(unittest.TestCase):
         guess = "e"
         WORD = "Dexter"
         hangman = Hangman(WORD)
-        # hangman.starred_word_list[1] = "e"
-        # hangman.starred_word_list[4] = "e"
         word_list = [*"*"*len(WORD)]
         word_list[1] = "e"
         word_list[4] = "e"
@@ -78,8 +77,10 @@ class HangmanGameTests(unittest.TestCase):
 
     def test_get_starred_word_string(self):
         # Arrange
-        hangman = Hangman()
         WORD = "Dexter"
+        hangman = Hangman(WORD)
+        hangman.starred_word_list[1] = "e"
+        hangman.starred_word_list[4] = "e"
         word_list = [*"*"*len(WORD)]
         word_list[1] = "e"
         word_list[4] = "e"
@@ -92,21 +93,27 @@ class HangmanGameTests(unittest.TestCase):
 
     def test_check_game_success_word_guessed(self):
         # Arrange
-        hangman = Hangman()
         WORD = "Dexter"
-        word_list = [*WORD]
-        guess_count = 0
+        hangman = Hangman(WORD)
+        hangman.starred_word_list[0] = "d"
+        hangman.starred_word_list[1] = "e"
+        hangman.starred_word_list[2] = "x"
+        hangman.starred_word_list[3] = "t"
+        hangman.starred_word_list[4] = "e"
+        hangman.starred_word_list[5] = "r"
+        starred_word_list = [*WORD]
+        incorrect_guess_count = 0
 
         # Act
-        result = hangman.check_game_success(word_list, guess_count)
+        result = hangman.check_game_success(starred_word_list, incorrect_guess_count)
 
         # Assert
-        self.assertEqual(result, GameStatus.success)
+        self.assertEqual(result, GameStatus.game_won)
 
-    def test_check_game_success_word_not_guessed(self, word_dict, guess_count):
+    def test_check_game_success_word_not_guessed(self):
         # Arrange
-        hangman = Hangman()
         WORD = "Dexter"
+        hangman = Hangman(WORD)
         word_list = [*"*"*len(WORD)]
         word_list[1] = "e"
         word_list[4] = "e"
@@ -116,12 +123,12 @@ class HangmanGameTests(unittest.TestCase):
         result = hangman.check_game_success(word_list, guess_count)
 
         # Assert
-        self.assertEqual(result, GameStatus.still_playing)
+        self.assertEqual(result, GameStatus.game_in_progress)
 
-    def test_check_game_success_max_guesses_exceeded(self, word_dict, guess_count):
+    def test_check_game_success_max_guesses_exceeded(self):
         # Arrange
-        hangman = Hangman()
         WORD = "Dexter"
+        hangman = Hangman(WORD)
         word_list = [*"*"*len(WORD)]
         word_list[1] = "e"
         word_list[4] = "e"
@@ -131,7 +138,7 @@ class HangmanGameTests(unittest.TestCase):
         result = hangman.check_game_success(word_list, guess_count)
 
         # Assert
-        self.assertEqual(result, GameStatus.game_over)
+        self.assertEqual(result, GameStatus.game_lost)
 
 
 if __name__ == "__main__":
