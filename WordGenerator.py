@@ -1,7 +1,10 @@
+from random import randint
+
+
 class WordGenerator():
 
-    def __init__(self, file_location):
-        self.file_location = file_location
+    def __init__(self):
+        pass
 
     def open_words_txt(self, location):
         try:
@@ -13,3 +16,7 @@ class WordGenerator():
             return temp_text.read().splitlines()
         finally:
             temp_text.close()
+
+    def get_random_word(self, words):
+        rand_word_index = randint(0, (len(words) - 1))
+        return words[rand_word_index]

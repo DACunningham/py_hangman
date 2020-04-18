@@ -15,7 +15,7 @@ class WordGeneratorTests(unittest.TestCase):
         temp_txt.write("Cunningham\n")
         temp_txt.close()
         location = "temp.txt"
-        word_gen = WordGenerator(location)
+        word_gen = WordGenerator()
 
         # Act
         words = word_gen.open_words_txt(location)
@@ -29,11 +29,11 @@ class WordGeneratorTests(unittest.TestCase):
     def test_get_game_word(self):
         # Arrange
         temp_txt = open("temp.txt", "w+")
-        temp_txt.write("Dexter")
-        temp_txt.write("Cunningham")
+        temp_txt.write("Dexter\n")
+        temp_txt.write("Cunningham\n")
         temp_txt.close()
         location = "temp.txt"
-        word_gen = WordGenerator(location)
+        word_gen = WordGenerator()
         words = word_gen.open_words_txt(location)
 
         # Act
@@ -61,9 +61,11 @@ class HangmanGameTests(unittest.TestCase):
 
     def test_check_guess_validity(self):
         # Arrange
-        hangman = Hangman()
         guess = "e"
         WORD = "Dexter"
+        hangman = Hangman(WORD)
+        # hangman.starred_word_list[1] = "e"
+        # hangman.starred_word_list[4] = "e"
         word_list = [*"*"*len(WORD)]
         word_list[1] = "e"
         word_list[4] = "e"
