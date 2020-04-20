@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import patch
 import os
-from Hangman import Hangman
+from Cunningham_Dexter_Hangman import Hangman
 from GameStatus import GameStatus
 from WordGenerator import WordGenerator
 

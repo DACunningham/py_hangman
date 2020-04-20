@@ -3,13 +3,27 @@ from GameStatus import GameStatus
 
 
 class Hangman():
+    """ Class containing all of the information and methods required to run a game of hangman on the console.
+    """
 
     def __init__(self, game_word):
+        """ Create an instance on hangman class with a specific word to play against.
+
+        Arguments:
+            game_word {str} -- Word the player must guess when playing hangman.
+        """
+
         self.GAME_WORD = game_word.lower()
         self.starred_word_list = [* "*" * len(self.GAME_WORD)]
         self.incorrect_guess_count = 0
 
     def user_guess(self):
+        """ Takes console input from user to allow character guessing. On exception, default user guess is returned (" ").
+
+        Returns:
+            str -- The user inputted guess.
+        """
+
         _user_input = ""
         try:
             _user_input = input(f"\nIncorrect Guesses: {self.incorrect_guess_count} of 7." +
@@ -23,6 +37,15 @@ class Hangman():
             return _user_input
 
     def user_guess_valid(self, guess):
+        """Checks is user's character guess is in the game word and modifies game word list.
+
+        Arguments:
+            guess {str} -- User's guess.
+
+        Returns:
+            list -- Game word as list with guessed charaters inputted if guess valid.
+        """
+
         correct_guess_indexes = [idx for idx, val in enumerate(
             self.GAME_WORD) if val == guess.lower()]
 
@@ -35,6 +58,15 @@ class Hangman():
         return self.starred_word_list
 
     def get_starred_word_as_str(self, word_list):
+        """Convert game word with user guesses to a str for output to user interface.
+
+        Arguments:
+            word_list {list} -- Game word split into characters with *s for hidden characters.
+
+        Returns:
+            list -- Game word plit into characters with *s for hidden characters with user's guess revealed.
+        """
+
         return "".join(self.starred_word_list)
 
     def check_game_success(self, starred_word_list, incorrect_guess_count):
@@ -57,12 +89,22 @@ class Hangman():
 
 
 class GameEngine():
+    """Holds logic for game loop
+    """
 
     def __init__(self, hangman_game: Hangman):
+        """Create instance of game engine to facilitate user interaction with system.
+
+        Arguments:
+            hangman_game {Hangman} -- Game class of type Hangman
+        """
+
         self.game = hangman_game
         self.running_engine()
 
     def running_engine(self):
+        """Continuous loop for game logic to allow user interaction with system. Loop will continue until game is won or lost.
+        """
 
         game_status = GameStatus.game_in_progress
         while game_status == GameStatus.game_in_progress:
