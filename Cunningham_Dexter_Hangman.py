@@ -26,7 +26,7 @@ class Hangman():
 
         _user_input = ""
         try:
-            _user_input = input(f"\nIncorrect Guesses: {self.incorrect_guess_count} of 7." +
+            _user_input = input(f"\nIncorrect Guesses: {self.incorrect_guess_count} of 6." +
                                 f"\nThe word to be guessed is: {self.get_starred_word_as_str(self.starred_word_list)}" +
                                 "\nPlease enter your next guess: ")
         except EOFError as ex:
@@ -80,7 +80,7 @@ class Hangman():
             [GameStatus] -- Appropriate enum describing the current status of the game based on user input.
         """
 
-        if incorrect_guess_count > 7:
+        if incorrect_guess_count > 6:
             return GameStatus.game_lost
         elif starred_word_list.count("*") == 0:
             return GameStatus.game_won

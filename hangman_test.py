@@ -158,7 +158,7 @@ class HangmanGameTests(unittest.TestCase):
         word_list = [*"*"*len(WORD)]
         word_list[1] = "e"
         word_list[4] = "e"
-        guess_count = 8
+        guess_count = 7
 
         # Act
         result = hangman.check_game_success(word_list, guess_count)
