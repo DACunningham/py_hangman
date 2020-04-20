@@ -60,7 +60,7 @@ class HangmanGameTests(unittest.TestCase):
         # Assert
         self.assertEqual(result, "e")
 
-    def test_check_guess_validity(self):
+    def test_check_guess_validity_correct_guess(self):
         # Arrange
         guess = "e"
         WORD = "Dexter"
@@ -74,6 +74,31 @@ class HangmanGameTests(unittest.TestCase):
 
         # Assert
         self.assertListEqual(result, word_list)
+
+    def test_check_guess_validity_invalid_word(self):
+        # Arrange
+        guess = "f"
+        WORD = "Dexter"
+        hangman = Hangman(WORD)
+        word_list = [*"*"*len(WORD)]
+
+        # Act
+        result = hangman.user_guess_valid(guess)
+
+        # Assert
+        self.assertListEqual(result, word_list)
+
+    def test_check_guess_validity_invalid_word_count_increased(self):
+        # Arrange
+        guess = "f"
+        WORD = "Dexter"
+        hangman = Hangman(WORD)
+
+        # Act
+        hangman.user_guess_valid(guess)
+
+        # Assert
+        self.assertEqual(hangman.incorrect_guess_count, 1)
 
     def test_get_starred_word_string(self):
         # Arrange
@@ -105,7 +130,8 @@ class HangmanGameTests(unittest.TestCase):
         incorrect_guess_count = 0
 
         # Act
-        result = hangman.check_game_success(starred_word_list, incorrect_guess_count)
+        result = hangman.check_game_success(
+            starred_word_list, incorrect_guess_count)
 
         # Assert
         self.assertEqual(result, GameStatus.game_won)
